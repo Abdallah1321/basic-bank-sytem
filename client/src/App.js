@@ -1,15 +1,29 @@
 import logo from "./logo.svg";
 import "./App.css";
 import NavBar from "./components/Navbar";
+import Home from "./pages/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Nav, Navbar, Container, Row, Col } from "react-bootstrap";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
     <Router>
-      <div className="App">
+      <header className="App-header sicky-nav">
         <NavBar />
-      </div>
+      </header>
+
+      <Container>
+        <Row>
+          <Col md={12}>
+            <div className="wrapper">
+              <Routes>
+                <Route exact path="/" element={<Home/>} />
+              </Routes>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </Router>
   );
 }
