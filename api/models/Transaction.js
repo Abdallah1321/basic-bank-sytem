@@ -1,21 +1,21 @@
-const mongoose =require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 
 let transactionSchema = new Schema({
-    name1: {
+    sender: {
         type: String,
         required: true
     },
-    name2: {
+    receiver: {
         type: String
     },
     amount: {
         type: Number
     }
 },{
-    collection: 'BasicBank'
+    collection: 'Transactions'
 }
 
 )
-module.exports = mongoose.model('Transaction', transactionSchema)
+export default mongoose.model('Transaction', transactionSchema)

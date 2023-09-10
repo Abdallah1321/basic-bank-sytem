@@ -1,4 +1,4 @@
-const mongoose =require('mongoose');
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 
@@ -14,8 +14,8 @@ let userSchema = new Schema({
         type: Number
     }
 },{
-    collection: 'BasicBank'
+    collection: 'Users'
 }
 
 )
-module.exports = mongoose.model('User', userSchema)
+export default mongoose.model('User', userSchema)
