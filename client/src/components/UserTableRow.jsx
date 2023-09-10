@@ -7,11 +7,11 @@ import Form from 'react-bootstrap/Form';
 
 import Modal from 'react-bootstrap/Modal';
 
-const userTableRow = (props) => {
+const UserTableRow = (props) => {
     const { _id, name,email, amount} = props.obj;
     
     const deleteUser = () => {
-        axios.delete(window.location.origin+"/users/delete-user/"+ _id).then((res)=>{
+        axios.delete("https://banksystem-86qs.onrender.com/users/"+ _id).then((res)=>{
             if(res.status === 200 ){
                 alert("User successfully deleted");
           window.location.reload();
@@ -27,7 +27,7 @@ const userTableRow = (props) => {
     const [formValues, setFormValues] = useState({name1:name, name2:'',amount:''});
     const [formValues2, setFormValues2] = useState({name:"", email:'',amount:''});
     useEffect(()=>{
-        axios.get(window.location.origin+'/users/').then(({data})=>{
+        axios.get('https://banksystem-86qs.onrender.com/users/').then(({data})=>{
             setUser(data);
         }).catch((err)=>{
             console.log(err);
@@ -80,7 +80,7 @@ const userTableRow = (props) => {
         } 
         else if(formValues.name2 == formValues.name1) alert("sender and receiver can't be same")
         else{
-            axios.post(window.location.origin+'/users/create-transaction', formValues).then(res => {
+            axios.post('https://banksystem-86qs.onrender.com/transactions', formValues).then(res => {
             if(res.status === 200){
                 alert('Transaction Successfull')
                 window.location = "/"
@@ -156,4 +156,4 @@ const userTableRow = (props) => {
     
 }
 
-export default userTableRow;
+export default UserTableRow;

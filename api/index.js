@@ -17,7 +17,15 @@ app.use(
     extended: true,
   })
 );
-app.use(cors());
+const corsOptions = {
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://mazebank.netlify.app",
+  ],
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/transactions", transactionsRoute);

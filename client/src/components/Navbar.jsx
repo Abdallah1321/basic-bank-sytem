@@ -15,9 +15,9 @@ const NavBar = () =>{
               <Navbar.Collapse id="navbarScroll" >
                 <Nav className="justify-content-end" style={{ width: "100%" }}>
                 <Nav.Link href="/">Home</Nav.Link>
-                  <Nav.Link href="/customer-list">View Customers</Nav.Link>
+                  <Nav.Link href="/users">View Customers</Nav.Link>
                   {/* <Nav.Link href="/create-transaction">Tranfer money</Nav.Link> */}
-                  <Nav.Link href="/transaction-history">
+                  <Nav.Link href="/transactionHistory">
                     Transaction History
                   </Nav.Link>
                 </Nav>
