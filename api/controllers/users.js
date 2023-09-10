@@ -23,7 +23,7 @@ export const getUsers = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    const user = await User.findById(userId);
+    const user = await userSchema.findById(userId);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
