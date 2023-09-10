@@ -17,7 +17,7 @@ const NavBar = () =>{
                 <Nav.Link href="/">Home</Nav.Link>
                   <Nav.Link href="/users">View Customers</Nav.Link>
                   {/* <Nav.Link href="/create-transaction">Tranfer money</Nav.Link> */}
-                  <Nav.Link href="/transactionHistory">
+                  <Nav.Link href="/transactions">
                     Transaction History
                   </Nav.Link>
                 </Nav>

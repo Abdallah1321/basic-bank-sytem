@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
-import UserTableRow from "../components/UserTableRow.jsx";
+import TransactionTableRow from "../components/TransactionTableRow";
 
 
-const UserList =()=>{
+const TransactionList =()=>{
     const [user, setUser] = useState([]);
 
     useEffect(()=>{
-        axios.get('https://banksystem-86qs.onrender.com/api/v1/users/').then(({data})=>{
+        axios.get('https://banksystem-86qs.onrender.com/api/v1/transactions/').then(({data})=>{
             setUser(data);
         }).catch((err)=>{
             console.log(err);
@@ -18,18 +18,18 @@ const UserList =()=>{
     const DataTable = () => {
         
         return user.map((res,i)=>{
-            return <UserTableRow obj={res} key={i} />
+            return <TransactionTableRow obj={res} key={i} />
         });
     };
+    
     return (
         <div className="table-wrapper">
             <Table striped bordered hover >
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Balance</th>
-                        <th>Action</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>{DataTable()}</tbody>
@@ -37,4 +37,4 @@ const UserList =()=>{
         </div>
     )
 }
-export default UserList;
+export default TransactionList;

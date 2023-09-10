@@ -6,6 +6,7 @@ import UserList from "./pages/UserList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Nav, Navbar, Container, Row, Col } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import TransactionList from "./pages/TransactionList";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Routes>
                 <Route exact path="/" element={<Home/>} />
                 <Route path="/users" element={<UserList/>} />
+                <Route path="/transactions" element={<TransactionList/>} />
               </Routes>
             </div>
           </Col>
