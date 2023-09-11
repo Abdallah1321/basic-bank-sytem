@@ -48,7 +48,7 @@ const UserTableRow = (props) => {
   const selectAmount = (event) => {
     if (event.target.value > balance) {
       alert("Low Balance");
-      window.location = "/";
+      window.location = "/users";
     } else {
       setFormValues((prev) => {
         return { ...prev, amount: event.target.value };
@@ -58,15 +58,13 @@ const UserTableRow = (props) => {
 
   const DataTable = () => {
     return user.map((category) => {
-        // Check if the user is the sender (based on _id)
-        if (category._id !== formValues.sender) {
-            return (
-                <option id={category._id}>{category.name}</option>
-            );
-        }
-        return null; // Exclude the sender from the dropdown
+      // Check if the user is the sender (based on _id)
+      if (category._id !== formValues.sender) {
+        return <option id={category._id}>{category.name}</option>;
+      }
+      return null; // Exclude the sender from the dropdown
     });
-}
+  };
 
   const onSubmit = () => {
     if (formValues.receiver === "" || formValues.amount === "") {

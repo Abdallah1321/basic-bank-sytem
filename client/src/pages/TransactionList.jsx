@@ -5,52 +5,57 @@ import TransactionTableRow from "../components/TransactionTableRow";
 
 const TransactionList = () => {
   const [transactions, setTransactions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userNames, setUserNames] = useState({}); // Store user names
 
   useEffect(() => {
+    // Fetch transactions
     axios
       .get("https://banksystem-86qs.onrender.com/api/v1/transactions/")
       .then(({ data }) => {
         setTransactions(data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  const getUserById = (userId) => {
-    // Fetch user data by ID from your API
-    // Replace the URL with your actual API endpoint for fetching user data
-    return axios
-      .get(`https://banksystem-86qs.onrender.com/api/v1/users/${userId}`)
-      .then(({ data }) => data.name)
-      .catch((err) => {
-        console.log(err);
-        return "User Not Found";
-      });
-  };
+  // Fetch user names for IDs
+  useEffect(() => {
+    async function fetchUserNames() {
+      const updatedUserNames = {};
 
-  const DataTable = () => {
-    return transactions.map((transaction, i) => {
-      // Fetch sender and receiver names based on their IDs
-      const senderNamePromise = getUserById(transaction.sender);
-      const receiverNamePromise = getUserById(transaction.receiver);
+      for (const transaction of transactions) {
+        try {
+          if (!userNames[transaction.sender]) {
+            const senderResponse = await axios.get(
+              `https://banksystem-86qs.onrender.com/api/v1/users/${transaction.sender}`
+            );
+            updatedUserNames[transaction.sender] = senderResponse.data.name;
+          }
 
-      return Promise.all([senderNamePromise, receiverNamePromise]).then(
-        ([senderName, receiverName]) => {
-          return (
-            <TransactionTableRow
-              obj={{
-                ...transaction,
-                sender: senderName,
-                receiver: receiverName,
-              }}
-              key={i}
-            />
-          );
+          if (!userNames[transaction.receiver]) {
+            const receiverResponse = await axios.get(
+              `https://banksystem-86qs.onrender.com/api/v1/users/${transaction.receiver}`
+            );
+            updatedUserNames[transaction.receiver] = receiverResponse.data.name;
+          }
+        } catch (error) {
+          console.error("Error fetching user names:", error);
         }
-      );
-    });
-  };
+      }
+
+      setUserNames((prevUserNames) => ({
+        ...prevUserNames,
+        ...updatedUserNames,
+      }));
+    }
+
+    if (!isLoading) {
+      fetchUserNames();
+    }
+  }, [isLoading, transactions, userNames]);
 
   return (
     <div className="table-wrapper">
@@ -62,7 +67,25 @@ const TransactionList = () => {
             <th>Amount</th>
           </tr>
         </thead>
-        <tbody>{DataTable()}</tbody>
+        <tbody>
+          {isLoading ? (
+            <tr>
+              <td colSpan="3">Loading...</td>
+            </tr>
+          ) : (
+            transactions.map((transaction, i) => (
+              <TransactionTableRow
+                obj={{
+                  ...transaction,
+                  sender: userNames[transaction.sender] || transaction.sender, // Use user name or ID
+                  receiver:
+                    userNames[transaction.receiver] || transaction.receiver, // Use user name or ID
+                }}
+                key={i}
+              />
+            ))
+          )}
+        </tbody>
       </Table>
     </div>
   );
