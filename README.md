@@ -78,7 +78,7 @@ cd ../api && npm start
 The project structure is organized as follows:
 
 - client: React frontend application.
-- server: Express.js backend server.
+- api: Express.js backend server.
 
 ## Usage
 
